@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { teacherLogin } = require('../controllers/teacher.controller');
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -17,6 +18,10 @@ const studentSchema = new mongoose.Schema({
   classroom: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Classroom' 
+  },
+  teacher: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Teacher'
   }
 });
 

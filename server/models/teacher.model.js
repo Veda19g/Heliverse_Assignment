@@ -18,7 +18,11 @@ const teacherSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Classroom', 
     unique: true // Ensures a teacher is assigned to only one classroom
-  }
+  },
+  students: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student'
+  }]
 });
 
 const Teacher = mongoose.model('Teacher', teacherSchema);

@@ -1,11 +1,55 @@
 const Teacher = require('../models/teacher.model');
 const Student = require('../models/student.model');
 const Classroom = require('../models/classroom.model');
+const Principal = require('../models/principal.model');
 const bcrypt = require('bcrypt');
-const { generateAccessToken } = require('../utils/auth');
+const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
 
+const createPrincipal=async(req,res)=>{
+  const {email,password}=req.body;
+  try{
+      const hashedPassword=await bcrypt.hash(password,10);
+      const principal=new Principal({email,password:hashedPassword});
+      await principal.save();
+      res.status(201).json({message:"principal created successfully",principal});
+  }
+  catch(error){
+      console.log(error);
+      res.status(400).json({message:"error creating principal",error});
+  }
+}
 
-  // Create a new classroom
+const principalLogin=async(req,res)=>{
+  const {email,password}=req.body;
+  try{
+      const principal=await Principal.findOne({email});
+      if(!principal){
+          return res.status(400).json({message:"student not found"});
+      }
+      const validPassword=await bcrypt.compare(password,principal.password);
+      if(!validPassword){
+          return res.status(400).json({message:"invalid password"});
+      }
+      const accessToken=generateAccessToken(principal._id);
+      const refreshToken=generateRefreshToken(principal._id);
+      res.cookie('refreshToken',refreshToken,{
+          httpOnly:true,
+          sameSite:'None',
+          secure:true
+      });
+      res.cookie('accessToken',accessToken,{
+          httpOnly:true,
+          sameSite:'None',
+          secure:true
+      });
+      res.status(200).json({message:"login successful",principal});
+  }
+  catch(error){
+
+      res.status(500).json({message:"an error occured",error:error.message});
+  }
+}
+
   const createClassroom=async(req, res)=>{
     try {
       const { name, startTime, endTime, days } = req.body;
@@ -17,7 +61,6 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // Assign a teacher to a classroom
   const assignTeacher=async(req, res)=>{
     try {
       const { teacherId, classroomId } = req.body;
@@ -40,7 +83,6 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // Assign a student to a teacher
   const  assignStudentToTeacher=async(req, res)=>{
     try {
       const { studentId, teacherId } = req.body;
@@ -56,6 +98,10 @@ const { generateAccessToken } = require('../utils/auth');
       }
 
       student.teacher = teacherId;
+
+      await Teacher.findByIdAndUpdate(teacherId, {
+        $push: { students: student._id }
+      });
       await student.save();
 
       res.status(200).json({ message: 'Student assigned to teacher successfully', student });
@@ -64,7 +110,7 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // Create a teacher account
+  
   const createTeacher=async(req, res)=>{
     try {
       const { name, email, password } = req.body;
@@ -77,12 +123,14 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // Create a student account
   const createStudent=async(req, res)=>{
     try {
       const { name, email, password, classroomId } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const student = new Student({ name, email, password: hashedPassword, classroom: classroomId });
+      await Classroom.findByIdAndUpdate(classroomId, {
+        $push: { students: student._id }
+      });
       await student.save();
       res.status(201).json({ message: 'Student created successfully', student });
     } catch (error) {
@@ -90,7 +138,6 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // View all teachers
   const viewAllTeachers=async(req, res)=>{
     try {
       const teachers = await Teacher.find().populate('classroom', 'name');
@@ -100,7 +147,6 @@ const { generateAccessToken } = require('../utils/auth');
     }
   }
 
-  // View all students
   const  viewAllStudents=async(req, res)=>{
     try {
       const students = await Student.find().populate('classroom', 'name');
@@ -111,4 +157,4 @@ const { generateAccessToken } = require('../utils/auth');
   }
 
 
-module.exports ={createClassroom,assignTeacher,assignStudentToTeacher,createTeacher,createStudent,viewAllTeachers,viewAllStudents}  ;
+module.exports ={createClassroom,assignTeacher,assignStudentToTeacher,createTeacher,createStudent,viewAllTeachers,viewAllStudents,principalLogin,createPrincipal};  ;

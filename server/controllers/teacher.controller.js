@@ -7,10 +7,9 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
 
 
 
-  // View students in the teacher's classroom
   const viewStudents=async(req, res)=> {
     try {
-      const teacherId = req.user.userId; // Assuming you use JWT and the teacher's ID is stored in req.user
+      const teacherId = req.userId; 
       const classroom = await Classroom.findOne({ teacher: teacherId }).populate('students');
 
       if (!classroom) {
@@ -23,7 +22,23 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
   }
 
-  // Update student details
+  const viewAssignedStudents=async(req, res)=> {
+    try {
+      
+      const teacherId = req.userId; 
+      const teacher = await Teacher.findById(teacherId).
+      populate('students');
+      
+      if (!teacher) {
+        return res.status(404).json({ message: 'Teacher not found' });
+      }
+
+      res.status(200).json({ students: teacher.students });
+    } catch (error) {
+      res.status(400).json({ message: 'Error fetching students', error });
+    }
+  }
+
   const updateStudent=async(req, res)=> {
     try {
       const { studentId } = req.params;
@@ -40,7 +55,6 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
   }
 
-  // Delete a student
   const deleteStudent=async(req, res)=>{
     try {
       const { studentId } = req.params;
@@ -56,17 +70,16 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
   }
 
-  // Create a timetable for the classroom
   const createTimetable=async(req, res)=>{
     try {
-      const teacherId = req.user.userId; // Again, assuming you have user info in the request
+      const teacherId = req.userId; 
       const classroom = await Classroom.findOne({ teacher: teacherId });
 
       if (!classroom) {
         return res.status(404).json({ message: 'Classroom not found' });
       }
 
-      const { schedule } = req.body; // Assuming schedule is an array of periods with start and end times
+      const { schedule } = req.body; 
 
       // Check if any periods overlap with classroom times
       const classroomStartTime = new Date(`1970-01-01T${classroom.startTime}`);
@@ -132,5 +145,6 @@ module.exports = {
     updateStudent,
     deleteStudent,
     createTimetable,
-    teacherLogin
+    teacherLogin,
+    viewAssignedStudents
 };

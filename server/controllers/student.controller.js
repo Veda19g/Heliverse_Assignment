@@ -1,11 +1,10 @@
 const Classroom = require('../models/classroom.model');
 const Timetable = require('../models/timetable.model');
 const Student = require('../models/student.model');
-const {viewAllStudents}=require("../controllers/principal.controller");
 const bcrypt = require('bcrypt');
 const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
 
-   const studentLogin=async(req,res)=>{
+const studentLogin=async(req,res)=>{
     const {email,password}=req.body;
     try{
         const student=await Student
@@ -37,10 +36,10 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
         res.status(500).json({message:"an error occured",error:error.message});
     }
 }
-  // View student details
+  
   const viewStudentDetails=async(req, res)=>{
     try {
-      const studentId = req.user.userId; // Assuming the student's ID is stored in req.user after authentication
+      const studentId = req.userId; 
       const student = await Student.findById(studentId).populate('classroom', 'name');
 
       if (!student) {
@@ -53,10 +52,9 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
   }
 
-  // View classroom details
   const viewClassroom=async(req, res)=>{
     try {
-      const studentId = req.user.userId;
+      const studentId = req.userId;
       const student = await Student.findById(studentId);
 
       if (!student) {
@@ -75,10 +73,29 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
   }
 
-  // View timetable
+  const viewStudents=async(req,res)=>{
+  const studentId=req.userId;
+    try{
+      const student=await Student.findById(studentId);
+      if(!student){
+        return res.status(404).json({message:"Student not found"});
+      }
+      const classroom=await Classroom.findById(student.classroom);
+      if(!classroom){
+        return res.status(404).json({message:"Classroom not found"});
+      }
+      const students=await Student.find({classroom:student.classroom});
+      res.status(200).json({students});
+    }
+    catch(error){
+      res.status(400).json({message:"Error fetching students",error});
+    }
+  }
+
+
   const viewTimetable=async(req, res)=>{
     try {
-      const studentId = req.user.userId;
+      const studentId = req.userId;
       const student = await Student.findById(studentId);
 
       if (!student) {
@@ -98,4 +115,4 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
   }
 
 
-module.exports ={studentLogin,viewStudentDetails,viewClassroom,viewTimetable};
+module.exports ={studentLogin,viewStudentDetails,viewClassroom,viewTimetable,viewStudents};
