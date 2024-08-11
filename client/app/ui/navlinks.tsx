@@ -18,7 +18,7 @@ import {
     { name: 'Teachers',href: '/principal/teachers',icon: UserIcon},
     { name: 'Students',href: '/principal/students',icon: UserIcon},
     { name: 'Timetables',href: '/principal/timetable',icon: PresentationChartBarIcon},
-    { name: 'settings',href: '/settings',icon: WrenchScrewdriverIcon}
+    
   ];
   
   export default function NavLinks() {

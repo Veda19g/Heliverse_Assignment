@@ -1,7 +1,7 @@
 
 'use client'
 import { useEffect, useState } from "react";
-import { getAllTeachers } from "@/actions";
+import { getAllTeachers,deleteTeacher } from "@/actions";
 export default function TeacherTable() {
 
 
@@ -16,8 +16,14 @@ const [Teachers, setTeachers] = useState([]);
         fetchTeachers();
     },[]);
 
+    const handleDelete = async (teacherId) => {
+        await deleteTeacher(teacherId);
+        const Teachers = await getAllTeachers();
+        setTeachers(Teachers);
+    };
 
-  console.log(Teachers);
+
+
     return (
         <div>
             
@@ -43,7 +49,7 @@ const [Teachers, setTeachers] = useState([]);
                             <td className="border border-gray-300 p-2">
                                 <div className="flex flex-row gap-4">
                                     <button className="p-2 text-white bg-blue-500 rounded-lg">Edit</button>
-                                    <button className="p-2 text-white bg-red-500 rounded-lg">Delete</button>
+                                    <button onClick={()=>handleDelete(teacher._id)} className="p-2 text-white bg-red-500 rounded-lg">Delete</button>
                                 </div>
                             </td>
                         </tr>

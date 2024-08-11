@@ -2,18 +2,28 @@
 import { useState } from "react";
 import TeacherTable from "@/app/ui/teachertable";
 import AddTeacher from "@/app/ui/addteacher";
+import AssignTeacher from "@/app/ui/assignteacher";
 export default function Teachers() {
     
     const [isViewTeachers, setIsViewTeachers] = useState(true);
     const [isAddTeacher, setIsAddTeacher] = useState(false);
+    const [isAssignTeacher, setIsAssignTeacher] = useState(false);
     const ViewTeachers = () => {
             setIsViewTeachers(true);
             setIsAddTeacher(false);    
+            setIsAssignTeacher(false);
     }
     const add = () => {
         setIsAddTeacher(true);
         setIsViewTeachers(false);
+        setIsAssignTeacher(false);
     }
+    const assign = () => {
+        setIsAssignTeacher(true);
+        setIsAddTeacher(false);
+        setIsViewTeachers(false);
+    }
+
     return (
 
         <div className="p-4">
@@ -25,10 +35,14 @@ export default function Teachers() {
             <div onClick={add} className="p-4 text-lg font-semibold text-gray-800border border-gray-300 rounded-lg bg-gray-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 Add Teacher
             </div>
+            <div onClick={assign} className="p-4 text-lg font-semibold text-gray-800border border-gray-300 rounded-lg bg-gray-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                Assign Student to Teacher
+            </div>
         </div>
         <div className="flex">
             {isViewTeachers && <TeacherTable />}
             {isAddTeacher && <AddTeacher/>}
+            {isAssignTeacher && <AssignTeacher/>}
         </div>
         </div>
 );

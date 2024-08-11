@@ -84,32 +84,37 @@ const principalLogin=async(req,res)=>{
     }
   }
 
-  const  assignStudentToTeacher=async(req, res)=>{
+  const assignStudentToTeacher = async (req, res) => {
     try {
-      const { studentId, teacherId } = req.body;
-      const teacher = await Teacher.findById(teacherId);
-      const student = await Student.findById(studentId);
+        const { studentName, teacherName } = req.body;
 
-      if (!teacher || !student) {
-        return res.status(404).json({ message: 'Teacher or Student not found' });
-      }
+        // Find teacher by name
+        const teacher = await Teacher.findOne({ name: teacherName });
+        // Find student by name
+        const student = await Student.findOne({ name: studentName });
 
-      if (student.classroom.toString() !== teacher.classroom.toString()) {
-        return res.status(400).json({ message: 'Student and teacher must be in the same classroom' });
-      }
+        // Check if both teacher and student exist
+        if (!teacher || !student) {
+            return res.status(404).json({ message: 'Teacher or Student not found' });
+        }
 
-      student.teacher = teacherId;
+        // Assign teacher to student
+        student.teacher = teacher._id;
 
-      await Teacher.findByIdAndUpdate(teacherId, {
-        $push: { students: student._id }
-      });
-      await student.save();
+        // Update teacher to add student to their students array
+        await Teacher.findByIdAndUpdate(teacher._id, {
+            $push: { students: student._id }
+        });
 
-      res.status(200).json({ message: 'Student assigned to teacher successfully', student });
+        // Save the updated student document
+        await student.save();
+
+        res.status(200).json({ message: 'Student assigned to teacher successfully', student });
     } catch (error) {
-      res.status(400).json({ message: 'Error assigning student', error });
+        console.error("Error assigning student:", error);
+        res.status(400).json({ message: 'Error assigning student', error });
     }
-  }
+}
 
   
   const createTeacher=async(req, res)=>{
@@ -194,53 +199,28 @@ const principalLogin=async(req,res)=>{
       res.status(400).json({ message: 'Error fetching classrooms', error });
     }
   }
+
+  const deleteStudent=async(req,res)=>{
+    const {studentId}=req.params;
+    try{
+        await Student.findByIdAndDelete(studentId);
+        res.status(200).json({message:"student deleted successfully"});
+    }catch(error){
+        res.status(400).json({message:"error deleting student",error});
+    }
+  }
+
+  const deleteTeacher=async(req,res)=>{
+    const {teacherId}=req.params;
+    try{
+        await Teacher.findByIdAndDelete(teacherId);
+        res.status(200).json({message:"teacher deleted successfully"});
+    }catch(error){
+        res.status(400).json({message:"error deleting teacher",error});
+    }
+  }
   
-  const deleteStudent = async (req, res) => {
-    try {
-        let studentId = req.params.studentId.trim(); // Trim any extra spaces
 
-        // Validate ObjectId format
-        if (!mongoose.Types.ObjectId.isValid(studentId)) {
-            return res.status(400).json({ message: 'Invalid student ID format' });
-        }
-
-        // Find the student by ID
-        const student = await Student.findByIdAndDelete(studentId);
-        if (!student) {
-            return res.status(404).json({ message: 'Student not found' });
-        }
-
-        // Remove the student
-        
-        res.status(200).json({ message: 'Student deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'An error occurred', error: error.message });
-    }
-};
-
-const deleteTeacher = async (req, res) => {
-    try {
-        let teacherId = req.params.teacherId.trim(); // Trim any extra spaces
-
-        // Validate ObjectId format
-        if (!mongoose.Types.ObjectId.isValid(teacherId)) {
-            return res.status(400).json({ message: 'Invalid teacher ID format' });
-        }
-
-        // Find the teacher by ID
-        const teacher = await Teacher.findByIdAndDelete(teacherId);
-        if (!teacher) {
-            return res.status(404).json({ message: 'Teacher not found' });
-        }
-
-        // Remove the teacher
-        await teacher.remove();
-        res.status(200).json({ message: 'Teacher deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'An error occurred', error: error.message });
-        console.log(error); // Log error for debugging
-    }
-};
 
 
 module.exports ={createClassroom,assignTeacher,assignStudentToTeacher,createTeacher,createStudent,viewAllTeachers,viewAllStudents,principalLogin,createPrincipal,viewAllClassrooms,deleteStudent,deleteTeacher};  ;

@@ -28,7 +28,7 @@ const userData = response.data[id];
 console.log("user data", userData);
 localStorage.setItem('user', JSON.stringify(userData));
 
-return { status: true, user: userData.email};
+return { status: true, user: userData };
 } catch (error) {
 console.log("error logging in", error);
 alert(error)
@@ -148,34 +148,56 @@ export const addTeacher=async(teacher)=>{
     }
 };
 
+export const assignStudentToTeacher=async(data)=>{
+    console.log("data", data);
+    try{
+        const response=await axios.post(`http://localhost:8000/api/v1/principal/assignStudentToTeacher`,data,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    }catch(error){
+        console.log("error assigning student to teacher", error);
+        alert("Error assigning student to teacher. Please try again.");
+    }
+}
+
 export const deleteStudent=async(studentId)=>{
-    console.log("studentId", studentId);
-    try {
-        const response = await axios.post(`http://localhost:8000/api/v1/principal/deleteStudent/${studentId}`, {
-            withCredentials: true,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        return response.data;
+    try{
+        const response=await axios.post(`http://localhost:8000/api/v1/principal/deleteStudent/${studentId}`,{},
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
     }catch(error){
         console.log("error deleting student", error);
         alert("Error deleting student. Please try again.");
     }
-};
+}
 
 export const deleteTeacher=async(teacherId)=>{
-    console.log("teacherId", teacherId);
-    try {
-        const response = await axios.delete(`http://localhost:8000/api/v1/principal/deleteTeacher/${teacherId}`, {
-            withCredentials: true,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        return response.data;
+    try{
+        const response=await axios.post(`http://localhost:8000/api/v1/principal/deleteTeacher/${teacherId}`,{},
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
     }catch(error){
         console.log("error deleting teacher", error);
         alert("Error deleting teacher. Please try again.");
     }
-};
+}
+
+
+
+
+

@@ -13,10 +13,12 @@ export default function ClassroomTable() {
         fetchStudents();
     },[]);
 
-    const deleteStud = async (id) => {
-        const response = await deleteStudent(id);
-        console.log(response);
-    }
+    const handleDelete = async (studentId) => {
+        await deleteStudent(studentId);
+        const students = await getAllStudents();
+        setStudents(students);
+    };
+
 
 
   console.log(students);
@@ -45,7 +47,9 @@ export default function ClassroomTable() {
                             <td className="border border-gray-300 p-2">
                                 <div className="flex flex-row gap-4">
                                     <button  className="p-2 text-white bg-blue-500 rounded-lg">Edit</button>
-                                    <button onClick={()=>deleteStud(student._id)} className="p-2 text-white bg-red-500 rounded-lg">Delete</button>
+                                    <button onClick={
+                                        ()=>handleDelete(student._id)
+                                    } className="p-2 text-white bg-red-500 rounded-lg">Delete</button>
                                 </div>
                             </td>
                         </tr>
