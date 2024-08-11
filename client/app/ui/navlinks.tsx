@@ -16,7 +16,7 @@ import {
     { name: 'Dashboard', href: '/principal/dashboard', icon: HomeIcon },
     { name: 'Classrooms', href: '/principal/classrooms', icon: UserGroupIcon },
     { name: 'Teachers',href: '/principal/teachers',icon: UserIcon},
-    { name: 'Students',href: '/principal/studnets',icon: UserIcon},
+    { name: 'Students',href: '/principal/students',icon: UserIcon},
     { name: 'Timetables',href: '/principal/timetable',icon: PresentationChartBarIcon},
     { name: 'settings',href: '/settings',icon: WrenchScrewdriverIcon}
   ];

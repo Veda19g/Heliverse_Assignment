@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/principal/timetable", "app/principal/teachers", "app/principal/students", "app/principal/dashboard", "app/principal/classrooms"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/principal/timetable", "app/principal/teachers", "app/principal/students", "app/principal/dashboard", "app/principal/classrooms", "app/ui/studenttable.js"],
   "exclude": ["node_modules"]
 }
