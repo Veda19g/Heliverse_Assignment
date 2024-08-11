@@ -197,7 +197,55 @@ export const deleteTeacher=async(teacherId)=>{
     }
 }
 
+export const viewclassroom=async()=>{
 
+    try {
+        const response = await axios.post(`http://localhost:8000/api/v1/teacher/viewclassroom`,{},
+        {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.classroom;
+    }catch(error){
+        console.log("error getting students", error);
+        alert("Error getting students. Please try again.");
+    }
 
+}
+
+export const viewClassroomStudents=async()=>{
+    try {
+        const response = await axios.get(`http://localhost:8000/api/v1/teacher/students`,
+        {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.students;
+    }catch(error){
+        console.log("error getting students", error);
+        alert("Error getting students. Please try again.");
+    }
+}   
+
+export const createTimetable=async(timetable)=>{
+    try {
+        const response = await axios.post(`http://localhost:8000/api/v1/teacher/timetable`, 
+        {timetable},
+        {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data;
+    }catch(error){
+        console.log("error creating timetable", error);
+        alert("Error creating timetable. Please try again.");
+    }
+}
 
 

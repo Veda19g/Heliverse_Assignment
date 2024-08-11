@@ -38,28 +38,22 @@ export default function ClassroomTable() {
             <table className=" border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2">Classroom</th>
-                        <th className="border border-gray-300 p-2">Class Teacher</th>
-                        <th className="border border-gray-300 p-2">Number of Students</th>
-                        <th className="border border-gray-300 p-2">Actions</th>
+                        <th className="border border-gray-300 p-1 md:p-2">Classroom</th>
+                        <th className="border border-gray-300 p-1 md:p-2">Class Teacher</th>
+                        <th className="border border-gray-300 p-1 md:p-2">Number of Students</th>
                     </tr>
                 </thead>
                 <tbody>
                     {classrooms.map((classroom) => (
                         <tr key={classroom._id} className="bg-gray-50">
-                            <td className="border border-gray-300 p-2">{classroom.name}</td>
+                            <td className="border border-gray-300 p-1 md:p-2">{classroom.name}</td>
                             {classroom.teacher?.name ? (
-                                <td className="border border-gray-300 p-2">{classroom.teacher.name}</td>
+                                <td className="border border-gray-300 p-1 md:p-2">{classroom.teacher.name}</td>
                             ) : (
-                                <td className="border border-gray-300 p-2">No teacher assigned</td>
+                                <td className="border border-gray-300 p-1 md:p-2">No teacher assigned</td>
                             )}
-                            <td className="border border-gray-300 p-2">{classroom.students.length}</td>
-                            <td className="border border-gray-300 p-2">
-                                <div className="flex flex-row gap-4">
-                                    <button className="p-2 text-white bg-blue-500 rounded-lg">Edit</button>
-                                    <button className="p-2 text-white bg-red-500 rounded-lg">Delete</button>
-                                </div>
-                            </td>
+                            <td className="border border-gray-300 p-1 md:p-2">{classroom.students.length}</td>
+                            
                         </tr>
                     ))}
                 </tbody>

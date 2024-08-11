@@ -15,9 +15,7 @@ import {
   const links = [
     { name: 'Dashboard', href: '/student/dashboard', icon: HomeIcon },
     { name: 'Classroom', href: '/student/classroom', icon: UserGroupIcon },
-    { name: 'Teacher',href: '/student/teacher',icon: UserIcon},
     { name: 'Timetables',href: '/student/timetable',icon: PresentationChartBarIcon},
-    { name: 'settings',href: '/settings',icon: WrenchScrewdriverIcon}
   ];
   
   export default function NavLinks() {

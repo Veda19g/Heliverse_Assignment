@@ -1,4 +1,4 @@
-import Navbar from "../ui/navbar";
+import Navbar from "../ui/navbarstudent";
 import Sidebar from "@/app/ui/sidebarstudent"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

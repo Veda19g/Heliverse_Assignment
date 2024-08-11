@@ -79,13 +79,15 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
         return res.status(404).json({ message: 'Classroom not found' });
       }
 
-      const { schedule } = req.body; 
+      const { timetable } = req.body; 
+      console.log('Creating timetable:', timetable);
 
-      // Check if any periods overlap with classroom times
+      /**
+       // Check if any periods overlap with classroom times
       const classroomStartTime = new Date(`1970-01-01T${classroom.startTime}`);
       const classroomEndTime = new Date(`1970-01-01T${classroom.endTime}`);
 
-      for (const period of schedule) {
+      for (const period of timetable) {
         const periodStart = new Date(`1970-01-01T${period.start}`);
         const periodEnd = new Date(`1970-01-01T${period.end}`);
 
@@ -93,15 +95,16 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
           return res.status(400).json({ message: 'Period times must be within classroom hours and non-overlapping' });
         }
       }
+       */
 
-      const timetable = new Timetable({
+      const timeTable = new Timetable({
         classroom: classroom._id,
-        schedule
+        timetable
       });
 
-      await timetable.save();
+      await timeTable.save();
 
-      res.status(201).json({ message: 'Timetable created successfully', timetable });
+      res.status(201).json({ message: 'Timetable created successfully', timeTable });
     } catch (error) {
       res.status(400).json({ message: 'Error creating timetable', error });
     }
@@ -139,6 +142,21 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
     }
 };
 
+const viewclassroom=async(req, res)=> {
+  try {
+    const teacherId = req.userId; 
+    const classroom = await Classroom.findOne({ teacher: teacherId });
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Classroom not found' });
+    }
+
+    res.status(200).json({ classroom });
+  } catch (error) {
+    res.status(400).json({ message: 'Error fetching classroom', error });
+  }
+}
+
 
 module.exports = {
     viewStudents,
@@ -146,5 +164,6 @@ module.exports = {
     deleteStudent,
     createTimetable,
     teacherLogin,
-    viewAssignedStudents
+    viewAssignedStudents,
+    viewclassroom
 };
