@@ -12,7 +12,6 @@ const authMiddleware=async (req,res,next)=>{
 
     const decoded=verifyToken(accessToken,process.env.ACCESS_TOKEN_SECRET);
     
-    console.log(decoded);
 
     if(decoded){
         req.userId=decoded.userId;
