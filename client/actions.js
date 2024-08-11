@@ -248,4 +248,32 @@ export const createTimetable=async(timetable)=>{
     }
 }
 
+export const viewClassroomfriends=async()=>{
+    try{
+        const response=await axios.get(`http://localhost:8000/api/v1/student/students`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.students;
+    }catch(error){
+        console.log("error getting students", error);
+        alert("Error getting students. Please try again.");
+    }
+}
 
+export const fetchTimetable=async()=>{
+    try{
+        const response=await axios.get(`http://localhost:8000/api/v1/student/timetable`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data;
+    }catch(error){
+        console.log("error getting timetable", error);
+        alert("Error getting timetable. Please try again.");
+    }
+}

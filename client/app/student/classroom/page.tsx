@@ -1,8 +1,12 @@
+import Friends from "@/app/ui/friendtable"
 export default function Page() {
 
     return (
         <div>
-            Classroom
+            <div className="p-4">See Your Friends</div>
+            <div className="mt-3">
+          <Friends/>
+            </div>
         </div>
     );
 }

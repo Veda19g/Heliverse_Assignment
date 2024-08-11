@@ -1,7 +1,9 @@
-
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {login} from "@/actions"
+import {login} from "@/actions";
+
 export default function Login({ id }: { id: string }) {
+    const router = useRouter();
     const [formData, setFormData] = useState({ email: "", password: "" });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,8 +17,7 @@ export default function Login({ id }: { id: string }) {
         try{
             const response=await login(formData,id);
             if (response.status) {
-                console.log(response);
-                alert(`Logged in as: ${response.user}`);
+                router.push(`/${id}/dashboard`);
             } else {
                 alert("Login failed. Please check your credentials and try again.");
             }
