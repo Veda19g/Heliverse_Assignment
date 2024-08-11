@@ -7,7 +7,7 @@ const cookies=require("cookie-parser")
 const backendroutes=require("./routes/backend.routes");
 const app=express();
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://heliverse-assignment-bay.vercel.app',
     credentials: true
   }));
 app.use(express.json());  

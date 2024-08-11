@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 export const login=async(user,id)=>{
     try {
 
-    const response = await axios.post(`http://localhost:8000/api/v1/${id}/login`, 
+    const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/${id}/login`, 
     user ,
     {
         withCredentials: true,
@@ -54,7 +54,7 @@ export const getUserData = async () => {
 
 export const getAllClassrooms=async()=>{
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/principal/viewAllClassrooms`, {
+        const response = await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/viewAllClassrooms`, {
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const getAllClassrooms=async()=>{
 
 export const addClassroom=async(classroom)=>{
     try {
-        const response = await axios.post(`http://localhost:8000/api/v1/principal/createclassroom`, 
+        const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/createclassroom`, 
         classroom,
         {
             withCredentials: true,
@@ -86,7 +86,7 @@ export const addClassroom=async(classroom)=>{
 
 export const getAllStudents=async()=>{
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/principal/viewAllStudents`, {
+        const response = await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/viewAllStudents`, {
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
@@ -101,7 +101,7 @@ export const getAllStudents=async()=>{
 
 export const addStudent=async(student)=>{
     try {
-        const response = await axios.post(`http://localhost:8000/api/v1/principal/createstudent`, 
+        const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/createstudent`, 
         student,
         {
             withCredentials: true,
@@ -118,7 +118,7 @@ export const addStudent=async(student)=>{
 
 export const getAllTeachers=async()=>{
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/principal/viewAllTeachers`, {
+        const response = await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/viewAllTeachers`, {
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +133,7 @@ export const getAllTeachers=async()=>{
 
 export const addTeacher=async(teacher)=>{
     try {
-        const response = await axios.post(`http://localhost:8000/api/v1/principal/createteacher`, 
+        const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/createteacher`, 
         teacher,
         {
             withCredentials: true,
@@ -151,7 +151,7 @@ export const addTeacher=async(teacher)=>{
 export const assignStudentToTeacher=async(data)=>{
     console.log("data", data);
     try{
-        const response=await axios.post(`http://localhost:8000/api/v1/principal/assignStudentToTeacher`,data,
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/assignStudentToTeacher`,data,
             {
                 withCredentials: true,
                 headers: {
@@ -167,7 +167,7 @@ export const assignStudentToTeacher=async(data)=>{
 
 export const deleteStudent=async(studentId)=>{
     try{
-        const response=await axios.post(`http://localhost:8000/api/v1/principal/deleteStudent/${studentId}`,{},
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/deleteStudent/${studentId}`,{},
             {
                 withCredentials: true,
                 headers: {
@@ -183,7 +183,7 @@ export const deleteStudent=async(studentId)=>{
 
 export const deleteTeacher=async(teacherId)=>{
     try{
-        const response=await axios.post(`http://localhost:8000/api/v1/principal/deleteTeacher/${teacherId}`,{},
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/deleteTeacher/${teacherId}`,{},
             {
                 withCredentials: true,
                 headers: {
@@ -200,7 +200,7 @@ export const deleteTeacher=async(teacherId)=>{
 export const viewclassroom=async()=>{
 
     try {
-        const response = await axios.post(`http://localhost:8000/api/v1/teacher/viewclassroom`,{},
+        const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/teacher/viewclassroom`,{},
         {
             withCredentials: true,
             headers: {
@@ -217,7 +217,7 @@ export const viewclassroom=async()=>{
 
 export const viewClassroomStudents=async()=>{
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/teacher/students`,
+        const response = await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/teacher/students`,
         {
             withCredentials: true,
             headers: {
@@ -233,7 +233,7 @@ export const viewClassroomStudents=async()=>{
 
 export const createTimetable=async(timetable)=>{
     try {
-        const response = await axios.post(`http://localhost:8000/api/v1/teacher/timetable`, 
+        const response = await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/teacher/timetable`, 
         {timetable},
         {
             withCredentials: true,
@@ -250,7 +250,7 @@ export const createTimetable=async(timetable)=>{
 
 export const viewClassroomfriends=async()=>{
     try{
-        const response=await axios.get(`http://localhost:8000/api/v1/student/students`,{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/student/students`,{
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
@@ -265,7 +265,7 @@ export const viewClassroomfriends=async()=>{
 
 export const fetchTimetable=async()=>{
     try{
-        const response=await axios.get(`http://localhost:8000/api/v1/student/timetable`,{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/student/timetable`,{
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
