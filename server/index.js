@@ -7,7 +7,7 @@ const cookies=require("cookie-parser")
 const backendroutes=require("./routes/backend.routes");
 const app=express();
 app.use(cors({
-    origin: 'https://heliverse-assignment-n05avczkj-veda19gs-projects.vercel.app',
+    origin: 'https://heliverse-assignment-one.vercel.app',
     credentials: true
   }));
 app.use(express.json());  
