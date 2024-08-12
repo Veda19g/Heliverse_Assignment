@@ -1,4 +1,4 @@
-const Student = require('../models/student.model');
+const Student = require("../models/student.model");
 const Classroom = require('../models/classroom.model');
 const Timetable = require('../models/timetable.model'); 
 const Teacher = require('../models/teacher.model');
@@ -113,7 +113,7 @@ const { generateAccessToken,generateRefreshToken } = require('../utils/auth');
   const teacherLogin = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const teacher = await Teacher.findOne({ email });
+        const teacher = await Teacher.findOne({ email }).populate('classroom','name');
         if (!teacher) {
             return res.status(400).json({ message: "Teacher not found" });
         }
@@ -158,6 +158,8 @@ const viewclassroom=async(req, res)=> {
 }
 
 
+
+
 module.exports = {
     viewStudents,
     updateStudent,
@@ -165,5 +167,5 @@ module.exports = {
     createTimetable,
     teacherLogin,
     viewAssignedStudents,
-    viewclassroom
+    viewclassroom,
 };

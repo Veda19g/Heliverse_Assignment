@@ -2,20 +2,22 @@ const {verifyToken,generateAccessToken,generateRefreshToken}=require("../utils/a
 
 require("dotenv").config();
 
+
 const authMiddleware=async (req,res,next)=>{
 
-    const {accessToken,refreshToken}=req.cookies;
-    
-    if(!accessToken || !refreshToken){
-        return res.status(401).json({message:"unauthorized"});
-        }
+   const {accessToken,refreshToken}=req.cookies;
 
-    const decoded=verifyToken(accessToken,process.env.ACCESS_TOKEN_SECRET);
-    
+   if(!accessToken || !refreshToken){
+    return res.status(401).json({message:"unauthorized"});
+   }
+ 
+   const decoded=verifyToken(accessToken,process.env.ACCESS_TOKEN_SECRET);
+   
+   console.log(decoded)  
 
-    if(decoded){
-        req.userId=decoded.userId;
-        return next();
+   if(decoded){
+    req.userId=decoded.userId;
+    return next();
     }
 
     const decodedRefreshToken=verifyToken(refreshToken,process.env.REFRESH_TOKEN_SECRET);

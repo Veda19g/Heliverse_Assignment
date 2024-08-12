@@ -197,6 +197,24 @@ export const deleteTeacher=async(teacherId)=>{
     }
 }
 
+export const deleteClassroom=async(classroomId)=>{
+    try{
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/deleteClassroom/${classroomId}`,{},
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    }catch(error){
+        console.log("error deleting classroom", error);
+        alert("Error deleting classroom. Please try again.");
+    }
+}
+
+
+
 export const viewclassroom=async()=>{
 
     try {
@@ -277,3 +295,131 @@ export const fetchTimetable=async()=>{
         alert("Error getting timetable. Please try again.");
     }
 }
+
+export const singleClassroom=async(classroomId)=>{
+    try{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/singleClassroom/${classroomId}`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.classroom;
+    }catch(error){
+        console.log("error getting classroom", error);
+        alert("Error getting classroom. Please try again.");
+    }
+}
+export const updateClassroom=async(classroomId, classroom)=>{
+    try{
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/updateClassroom/${classroomId}`,classroom,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    }catch(error){
+        console.log("error updating classroom", error);
+        alert("Error updating classroom. Please try again.");
+    }
+}
+
+export const singleTeacher=async(teacherId)=>{
+    try{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/singleTeacher/${teacherId}`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.teacher;
+    }catch(error){
+        console.log("error getting teacher", error);
+        alert("Error getting teacher. Please try again.");
+    }
+}
+
+export const updateTeacher=async(teacherId, teacher)=>{
+    try{
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/updateTeacher/${teacherId}`,teacher,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    }catch(error){
+        console.log("error updating teacher", error);
+        alert("Error updating teacher. Please try again.");
+    }
+}
+
+export const singleStudent=async(studentId)=>{
+    try{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/singleStudent/${studentId}`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.student;
+    }catch(error){
+        console.log("error getting student", error);
+        alert("Error getting student. Please try again.");
+    }
+}
+
+export const updateStudent=async(studentId, student)=>{
+    try{
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/principal/updateStudent/${studentId}`,student,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    }catch(error){
+        console.log("error updating student", error);
+        alert("Error updating student. Please try again.");
+    }
+}
+
+export const viewSingleStudent=async(studentId)=>{
+    try{
+        const response=await axios.get(`https://heliverse-assignment-pd44.onrender.com/api/v1/student/students/${studentId}`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data.student;
+    }catch(error){
+        console.log("error getting student", error);
+        alert("Error getting student. Please try again.");
+    }
+}
+
+export const updateSingleStudent=async(studentId, student)=>{
+    try{
+        const response=await axios.post(`https://heliverse-assignment-pd44.onrender.com/api/v1/student/updateStudent/${studentId}`,student,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    }catch(error){
+        console.log("error updating student", error);
+        alert("Error updating student. Please try again.");
+    }
+}   
+

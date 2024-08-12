@@ -114,5 +114,35 @@ const studentLogin=async(req,res)=>{
     }
   }
 
+  const viewSingleStudent=async(req,res)=>{
+    const studentId=req.params.id;
+    try{
+      const student=await Student.findById(studentId).select('-password');
+      if(!student){
+        return res.status(404).json({message:"Student not found"});
+      }
+      res.status(200).json({student});
+    }
+    catch(error){
+      res.status(400).json({message:"Error fetching student",error});
+    }
+  }
 
-module.exports ={studentLogin,viewStudentDetails,viewClassroom,viewTimetable,viewStudents};
+  const updateSingleStuden=async(req,res)=>{
+    const studentId=req.params.studentId;
+    const updates=req.body;
+    try{
+      const student=await Student.findByIdAndUpdate(studentId,updates,{new:true});
+      if(!student){
+        return res.status(404).json({message:"Student not found"});
+      }
+      res.status(200).json({message:"Student updated successfully",student});
+    }
+    catch(error){
+      res.status(400).json({message:"Error updating student",error});
+    }
+  }
+
+
+
+module.exports ={studentLogin,viewStudentDetails,viewClassroom,viewTimetable,viewStudents,viewSingleStudent,updateSingleStuden};

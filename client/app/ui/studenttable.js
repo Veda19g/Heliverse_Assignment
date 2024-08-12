@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useState } from "react";
 import { getAllStudents,deleteStudent } from "@/actions";
-
+import {useRouter} from 'next/navigation'
 export default function ClassroomTable() {
+
+const router = useRouter();
     const [students, setStudents] = useState([]);
 
     useEffect(()=>{
@@ -18,19 +20,25 @@ export default function ClassroomTable() {
         const students = await getAllStudents();
         setStudents(students);
     };
+   
+    const handleUpdate=async (studentId)=>{
+        router.push(`/principal/update/student/${studentId}`);
+    }
 
 
 
   console.log(students);
     return (
-        <div>
+        <div className="overflow-x-auto">
             
             <table className=" border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-100">
                         <th className="border border-gray-300 md:p-2 p-1">Name</th>
                         <th className="border border-gray-300 md:p-2 p-1">ClassName</th>
-                        <th className="border border-gray-300 md:p-2 p-1">Actions</th>
+                        <th className="border border-gray-300 md:p-2 p-1">Email</th>
+                        <th className="border border-gray-300 md:p-2 p-1">Update</th>
+                        <th className="border border-gray-300 md:p-2 p-1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,13 +52,12 @@ export default function ClassroomTable() {
                             <td className="border border-gray-300 md:p-2 p-1">-</td>
                             }
 
-                            <td className="border border-gray-300 md:p-2 p-1">
-                                <div className="flex flex-row gap-4">
-                                    <button  className="md:p-2 p-1 text-white bg-blue-500 rounded-lg">Edit</button>
-                                    <button onClick={
-                                        ()=>handleDelete(student._id)
-                                    } className="md:p-2 p-1 text-white bg-red-500 rounded-lg">Delete</button>
-                                </div>
+                            <td className="border border-gray-300 md:p-2 p-1">{student.email}</td>
+                            <td className="p-1 border border-gray-300 md:p-2">
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" onClick={()=>{handleUpdate(student._id)}}>Update</button>
+                            </td>
+                            <td className="p-1 border border-gray-300 md:p-2">
+                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onClick={()=>{handleDelete(student._id)}}>Delete</button>
                             </td>
                         </tr>
                     ))}

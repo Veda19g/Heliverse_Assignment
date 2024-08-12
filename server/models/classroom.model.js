@@ -15,7 +15,11 @@ const classroomSchema = new mongoose.Schema({
   students: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student'
-  }]
+  }],
+  strength: {
+    type: Number,
+    default: 0
+  }
 });
 
 const Classroom = mongoose.model('Classroom', classroomSchema);

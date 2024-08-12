@@ -24,12 +24,15 @@ export default function Friends() {
                 <thead>
                     <tr className="bg-gray-100">
                         <th className="border border-gray-300 md:p-2 p-3">Name</th>
+                        <th className="border border-gray-300 md:p-2 p-3">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     {students.map((student) => (
                         <tr key={student._id} className="bg-gray-50">
                             <td className="border border-gray-300 md:p-2 p-3">{student.name}</td>
+                            <td className="border border-gray-300 md:p-2 p-3">{student.email}</td>
+
                         </tr>
                     ))}
                 </tbody>
