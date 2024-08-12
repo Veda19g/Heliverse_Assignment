@@ -13,7 +13,7 @@ export default function AddTeacherForm() {
         event.preventDefault();
 
         if (!name || !email || !password || !classroomName) {
-            setMessage('Please fill in all fields.');
+            alert('Please fill in all fields.');
             return;
         }
 
@@ -26,9 +26,9 @@ export default function AddTeacherForm() {
             setPassword("");
             setClassroomName("");
             }
-            setMessage(response.message);
+            //setMessage(response.message);
         } catch (error) {
-            setMessage('Error adding teacher.');
+            alert('Error adding teacher.');
         }
     };
 
