@@ -7,7 +7,7 @@ export default function AddTeacherForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [classroomName, setClassroomName] = useState('');
-    const [message, setMessage] = useState('');
+    //const [message, setMessage] = useState('');
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -105,7 +105,7 @@ export default function AddTeacherForm() {
                     </div>
                 </form>
             </div>
-            {message && <div className="mt-4 text-center text-red-500">{message}</div>}
+            {/*{message && <div className="mt-4 text-center text-red-500">{message}</div>}*/}
         </div>
     );
 }
