@@ -5,7 +5,7 @@ A Full-Stack classroom assignment
 - **Credentials**:  
   - **Email**: principal@classroom.com  
   - **Password**: Admin  
-- **App URL**: [Heliverse Assignment](https://heliverse-assignment-bay.vercel.app/)
+- **App URL**: [Heliverse Assignment](https://heliverse-assignment-one.vercel.app/)
 
 ## **Tech Stack**
 - **Frontend**: Next.js, TailwindCSS  
